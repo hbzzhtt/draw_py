@@ -9,6 +9,16 @@ class Point:
         self.color = color
         self.txt = txt
 
+    def extend(self, ext):
+        x = self.x+ext.x
+        y = self.y+ext.y
+        return Point(x, y, self.color, self.txt)
+
+class Ext:
+	def __init__(self, x, y):
+		self.x=x
+		self.y=y
+
 
 class Rect:
     def __init__(self, left_bottom, right_top, color = 'red'):
@@ -34,6 +44,13 @@ class Rect:
         lst.append(self.left_bottom.y)
         return lst
  
+
+class ExtRect(Rect):
+	def __init__(self, left_bottom, right_top, color = 'red'):
+		self.right_top = left_bottom.extend(right_top)
+		self.left_bottom = left_bottom
+		self.color = color
+
 
 class Canvas:
 	def __init__(self):
@@ -66,8 +83,6 @@ class Canvas:
 	def show(self):
 		#画连线图，以x_list中的值为横坐标，以y_list中的值为纵坐标
 		#参数c指定连线的颜色，linewidth指定连线宽度，alpha指定连线的透明度
-		for i in self.clst:
-			print(i)
 		self.ax.scatter(self.xlst, self.ylst, c=self.clst, linewidth=1, alpha=0.6)
 		for i in range(len(self.xlst)):
 			self.ax.annotate(self.tlst[i], xy=(self.xlst[i], self.ylst[i]), xytext=(self.xlst[i]+0.1, self.ylst[i]+0.1))
